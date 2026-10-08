@@ -82,3 +82,45 @@ See:
 ## Research Alignment
 
 The interface is aligned with the research contribution of a centralized monitoring system that supports document management, KPI oversight, internal audits, notifications, reporting, and searchable QA record retention.
+
+## Deployment
+
+### Vercel Deployment with Neon Database
+
+This project is configured for deployment on Vercel with Neon (serverless PostgreSQL) as the database.
+
+1. **Install Vercel CLI** (if not already installed):
+   ```bash
+   npm i -g vercel
+   ```
+
+2. **Set up Neon Database**:
+   - Create an account at https://neon.tech
+   - Create a new project/database
+   - Copy the connection string (DATABASE_URL)
+   - The connection string looks like: `postgresql://user:password@ep-xxx.region.aws.neon.tech/neondb?sslmode=require`
+
+3. **Deploy to Vercel**:
+   ```bash
+   vercel
+   ```
+
+4. **Configure Environment Variables in Vercel**:
+   - Go to your project settings in Vercel dashboard
+   - Add environment variable: `DATABASE_URL`
+   - Paste your Neon connection string
+   - Redeploy to apply changes
+
+### Environment Variables
+
+- `DATABASE_URL`: Your Neon PostgreSQL connection string
+- `PORT`: Server port (default: 3001, automatically set by Vercel)
+
+### Local Development with Neon
+
+For local development with Neon:
+
+1. Copy `.env.example` to `.env`
+2. Add your Neon DATABASE_URL to `.env`
+3. Run: `npm install` (to install dependencies)
+4. Run: `node server.js`

@@ -1,0 +1,15 @@
+{
+  "name": "qams",
+  "version": "1.0.0",
+  "description": "Quality Assurance Monitoring System",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

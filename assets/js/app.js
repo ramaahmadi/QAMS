@@ -5,7 +5,9 @@ const app = {
   apiStatus: "checking"
 };
 
-const API_BASE = "http://localhost:3001";
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? "http://localhost:3001"
+  : window.location.origin;
 
 async function fetchQamsJson(endpoint, options = {}) {
   const response = await fetch(`${API_BASE}${endpoint}`, options);
