@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QAMS | Quality Assurance Monitoring System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <div id="loginScreen" class="login-page">
+      <div class="container-fluid h-100">
+        <div class="row h-100 align-items-center justify-content-center">
+          <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center bg-primary-soft">
+            <div class="login-illustration text-center">
+              <div class="logo-badge mb-4">UI</div>
+              <h1 class="display-6 fw-bold text-primary">Quality Assurance Monitoring System</h1>
+              <p class="text-secondary mt-3">
+                Internal Quality Assurance System (SPMI) for Indonesian Higher Education Institutions
+              </p>
+              <div class="feature-pills d-flex flex-wrap justify-content-center gap-2 mt-4">
+                <span>Document Control</span>
+                <span>KPI Monitoring</span>
+                <span>Audit Management</span>
+                <span>Reporting</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center">
+            <div class="login-card p-4 p-md-5">
+              <div class="text-center mb-4">
+                <div class="university-logo mx-auto">Q</div>
+                <h2 class="fw-bold mt-3 mb-1">Quality Assurance Monitoring System</h2>
+                <p class="text-muted mb-0">Internal Quality Assurance System (SPMI)</p>
+              </div>
+
+              <form id="loginForm" novalidate>
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username / Email</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username or email" required />
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" class="form-control" id="password" placeholder="Enter password" required />
+                    <button type="button" class="btn btn-outline-secondary" id="togglePassword" aria-label="Show password">
+                      <i class="bi bi-eye-slash"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rememberMe" />
+                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                  </div>
+                  <a href="#" class="text-decoration-none small text-primary">Forgot password?</a>
+                </div>
+
+                <div id="loginAlert" class="alert d-none" role="alert"></div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">Login</button>
+              </form>
+
+              <div class="demo-credentials small text-muted text-center mt-3">
+                Demo users: <strong>admin/admin123</strong>, <strong>qao/qao123</strong>, <strong>faculty/faculty123</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="appShell" class="app-shell d-none">
+      <aside class="sidebar">
+        <div class="brand-wrap">
+          <div class="brand-logo">Q</div>
+          <div>
+            <div class="brand-title">QAMS</div>
+            <small>SPMI</small>
+          </div>
+        </div>
+
+        <nav class="nav flex-column mt-4" id="sidebarNav"></nav>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div class="page-title-group">
+            <div id="pageBreadcrumb" class="breadcrumb-wrap"></div>
+            <h1 id="pageTitle">Dashboard</h1>
+          </div>
+
+          <div class="header-actions">
+            <div id="apiStatusBadge" class="api-status-badge api-status-badge--offline">
+              <span class="dot"></span>
+              <span>Checking API</span>
+            </div>
+            <button id="notificationBellBtn" class="btn btn-light position-relative" type="button">
+              <i class="bi bi-bell"></i>
+              <span id="notificationBadge" class="badge">0</span>
+            </button>
+            <div class="user-chip dropdown">
+              <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="avatar-sm" id="userAvatar">A</span>
+                <span class="ms-2" id="userNameTop">Admin</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#" data-section="profileSection">Profile</a></li>
+                <li><a class="dropdown-item" href="#" data-section="settingsSection">System Settings</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><button class="dropdown-item text-danger" id="logoutBtn" type="button">Logout</button></li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <div class="content-area">
+          <section id="dashboardSection" class="page-section active">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Executive Overview</p>
+                <h2>Quality Assurance Dashboard</h2>
+              </div>
+              <button id="generateDashboardReportBtn" class="btn btn-primary btn-sm" type="button">Generate Report</button>
+            </div>
+
+            <div class="dashboard-hero card shadow-sm mb-4">
+              <div class="card-body">
+                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+                  <div>
+                    <div class="dashboard-kicker">Overall quality status</div>
+                    <h3 class="dashboard-hero-title">Stable performance with priority follow-up on documentation completeness.</h3>
+                  </div>
+                  <div class="dashboard-quick-stats">
+                    <div class="dashboard-stat-pill">
+                      <span class="dashboard-stat-label">Completion</span>
+                      <strong>78%</strong>
+                    </div>
+                    <div class="dashboard-stat-pill success">
+                      <span class="dashboard-stat-label">Validated</span>
+                      <strong>1</strong>
+                    </div>
+                    <div class="dashboard-stat-pill warning">
+                      <span class="dashboard-stat-label">Open</span>
+                      <strong>5</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="summaryCards" class="row g-3 mb-4"></div>
+
+            <div class="row g-4">
+              <div class="col-xl-6">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="card-title-row">
+                      <h3>Document Status</h3>
+                      <span class="badge bg-light text-dark">Current cycle</span>
+                    </div>
+                    <canvas id="documentStatusChart" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-6">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="card-title-row">
+                      <h3>KPI Performance</h3>
+                      <span class="badge bg-light text-dark">Achievement</span>
+                    </div>
+                    <canvas id="kpiPerformanceChart" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4 mt-1">
+              <div class="col-xl-6">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="card-title-row">
+                      <h3>Audit Status</h3>
+                      <span class="badge bg-light text-dark">Monitoring</span>
+                    </div>
+                    <canvas id="auditStatusChart" height="180"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-6">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="card-title-row">
+                      <h3>Upcoming Deadlines</h3>
+                      <span class="badge bg-warning-subtle text-warning-emphasis">Priority</span>
+                    </div>
+                    <div id="deadlineList" class="list-group list-group-flush"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4 mt-1">
+              <div class="col-xl-8">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="card-title-row">
+                      <h3>Recent Activities</h3>
+                      <span class="badge bg-light text-dark">Latest</span>
+                    </div>
+                    <div class="table-responsive mt-3">
+                      <table class="table table-hover align-middle">
+                        <thead>
+                          <tr>
+                            <th>User</th>
+                            <th>Activity</th>
+                            <th>Module</th>
+                            <th>Date/Time</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody id="activityTableBody"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-4">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="card-title-row">
+                      <h3>QA Signal</h3>
+                      <span class="badge bg-success-subtle text-success-emphasis">Healthy</span>
+                    </div>
+                    <div id="qaSignal" class="signal-stack mt-3"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="documentSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Knowledge Base</p>
+                <h2>Document Management</h2>
+              </div>
+              <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#documentModal">Upload Document</button>
+            </div>
+            <div class="card shadow-sm p-3 mb-4">
+              <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                  <label class="form-label">Search</label>
+                  <input type="text" class="form-control" id="documentSearch" placeholder="Search document title..." />
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="documentStatusFilter">
+                    <option value="all">All Status</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Under Review">Under Review</option>
+                    <option value="Validated">Validated</option>
+                    <option value="Rejected">Rejected</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Category</label>
+                  <select class="form-select" id="documentCategoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="LED">LED</option>
+                    <option value="LKPS">LKPS</option>
+                    <option value="SPMI">SPMI</option>
+                    <option value="Audit">Audit</option>
+                  </select>
+                </div>
+                <div class="col-md-2 text-end">
+                  <button class="btn btn-outline-secondary w-100" type="button" id="resetDocumentFilter">Reset</button>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive card shadow-sm">
+              <table class="table table-hover mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th>Document</th>
+                    <th>Category</th>
+                    <th>Owner</th>
+                    <th>Version</th>
+                    <th>Status</th>
+                    <th>Updated</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="documentTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="ledSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Institutional Reporting</p>
+                <h2>LED / LKPS Management</h2>
+              </div>
+              <button class="btn btn-primary" type="button">Create Submission</button>
+            </div>
+            <div id="ledSubmissionList" class="row g-4"></div>
+          </section>
+
+          <section id="kpiSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Performance Monitoring</p>
+                <h2>KPI / Quality Indicators</h2>
+              </div>
+              <button class="btn btn-primary" type="button">Add KPI</button>
+            </div>
+            <div class="card shadow-sm p-3 mb-4">
+              <div class="row g-3 align-items-center">
+                <div class="col-md-3">
+                  <label class="form-label">Category</label>
+                  <select class="form-select" id="kpiCategoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Student">Student</option>
+                    <option value="HR">HR</option>
+                    <option value="Facilities">Facilities</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="kpiStatusFilter">
+                    <option value="all">All Status</option>
+                    <option value="Excellent">Excellent</option>
+                    <option value="Achieved">Achieved</option>
+                    <option value="Partially Achieved">Partially Achieved</option>
+                    <option value="Not Achieved">Not Achieved</option>
+                  </select>
+                </div>
+                <div class="col-md-6 text-end">
+                  <button class="btn btn-outline-secondary" type="button" id="resetKpiFilter">Reset</button>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive card shadow-sm">
+              <table class="table table-hover mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th>KPI Code</th>
+                    <th>KPI Name</th>
+                    <th>Category</th>
+                    <th>Target</th>
+                    <th>Actual</th>
+                    <th>Achievement %</th>
+                    <th>Status</th>
+                    <th>Responsible Unit</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="kpiTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="auditSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Quality Assurance Review</p>
+                <h2>Internal Audit</h2>
+              </div>
+              <button id="scheduleAuditBtn" class="btn btn-primary" type="button">Schedule Audit</button>
+            </div>
+            <div id="auditTableContainer" class="table-responsive card shadow-sm"></div>
+          </section>
+
+          <section id="findingSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Evidence Review</p>
+                <h2>Audit Findings</h2>
+              </div>
+              <button id="addFindingBtn" class="btn btn-primary" type="button">Add Finding</button>
+            </div>
+            <div id="findingTableContainer" class="table-responsive card shadow-sm"></div>
+          </section>
+
+          <section id="followUpSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Corrective Action</p>
+                <h2>Audit Follow-Up</h2>
+              </div>
+              <button id="newFollowUpBtn" class="btn btn-primary" type="button">New Follow-Up</button>
+            </div>
+            <div id="followUpList" class="row g-4"></div>
+          </section>
+
+          <section id="notificationSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Communication</p>
+                <h2>Notifications</h2>
+              </div>
+              <button id="markAllReadBtn" class="btn btn-primary" type="button">Mark All Read</button>
+            </div>
+            <div class="card shadow-sm">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Module</th>
+                      <th>Date/Time</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="notificationTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section id="reportsSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Management Reporting</p>
+                <h2>Reports</h2>
+              </div>
+              <div class="btn-group">
+                <button id="printReportBtn" class="btn btn-outline-secondary" type="button">Print</button>
+                <button id="exportPdfBtn" class="btn btn-outline-secondary" type="button">Export PDF</button>
+                <button id="exportExcelBtn" class="btn btn-primary" type="button">Export Excel</button>
+              </div>
+            </div>
+            <div id="reportCards" class="row g-4"></div>
+          </section>
+
+          <section id="searchSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Central Repository</p>
+                <h2>Search & Archive</h2>
+              </div>
+            </div>
+            <div class="card shadow-sm p-3 mb-4">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label">Search Query</label>
+                  <input type="text" class="form-control" id="globalSearchInput" placeholder="Search documents, KPIs, audits..." />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Category</label>
+                  <select class="form-select" id="globalCategoryFilter">
+                    <option value="all">All</option>
+                    <option value="Document">Document</option>
+                    <option value="KPI">KPI</option>
+                    <option value="Audit">Audit</option>
+                    <option value="Finding">Finding</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Faculty</label>
+                  <select class="form-select" id="globalFacultyFilter">
+                    <option value="all">All</option>
+                    <option value="Teknik">Teknik</option>
+                    <option value="Ekonomi">Ekonomi</option>
+                    <option value="Komputer">Komputer</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="globalStatusFilter">
+                    <option value="all">All</option>
+                    <option value="Validated">Validated</option>
+                    <option value="Under Review">Under Review</option>
+                    <option value="Achieved">Achieved</option>
+                    <option value="Open">Open</option>
+                  </select>
+                </div>
+                <div class="col-md-2 text-end">
+                  <button class="btn btn-primary w-100" type="button" id="executeGlobalSearch">Search</button>
+                </div>
+              </div>
+            </div>
+            <div id="searchResults" class="row g-3"></div>
+          </section>
+
+          <section id="userManagementSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Access Control</p>
+                <h2>User Management</h2>
+              </div>
+              <button id="addUserBtn" class="btn btn-primary" type="button">Add User</button>
+            </div>
+            <div class="table-responsive card shadow-sm">
+              <table class="table table-hover align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Faculty</th>
+                    <th>Study Program</th>
+                    <th>Status</th>
+                    <th>Last Login</th>
+                  </tr>
+                </thead>
+                <tbody id="userTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="settingsSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">System Configuration</p>
+                <h2>System Settings</h2>
+              </div>
+            </div>
+            <div class="row g-4">
+              <div class="col-lg-6">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                    <h3>General Settings</h3>
+                    <div class="mb-3">
+                      <label class="form-label">Institution Name</label>
+                      <input id="institutionName" type="text" class="form-control" value="Universitas Teknologi Bandung" />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Quality Assurance Cycle</label>
+                      <input id="qualityAssuranceCycle" type="text" class="form-control" value="2025/2026" />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Review Deadline</label>
+                      <input id="reviewDeadline" type="date" class="form-control" value="2026-10-20" />
+                    </div>
+                    <div class="mt-4 d-flex justify-content-end">
+                      <button type="button" id="saveSettingsBtn" class="btn btn-primary">
+                        <i class="bi bi-save me-2"></i>Save Settings
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                    <h3>Notification Rules</h3>
+                    <div class="form-check form-switch mb-3">
+                      <input id="sendDocumentAlert" class="form-check-input" type="checkbox" checked />
+                      <label class="form-check-label">Send document submission alert</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                      <input id="autoReminder" class="form-check-input" type="checkbox" checked />
+                      <label class="form-check-label">Auto-remind approaching deadline</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                      <input id="auditEscalation" class="form-check-input" type="checkbox" checked />
+                      <label class="form-check-label">Audit follow-up escalation</label>
+                    </div>
+                    <div class="mt-4 pt-3 border-top">
+                      <button type="button" id="resetDemoDataBtn" class="btn btn-outline-danger w-100">
+                        <i class="bi bi-arrow-counterclockwise me-2"></i>Reset Demo Data
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="profileSection" class="page-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Account</p>
+                <h2>Profile</h2>
+              </div>
+            </div>
+            <div class="row g-4">
+              <div class="col-lg-4">
+                <div class="card shadow-sm text-center p-4">
+                  <div class="avatar-lg mx-auto mb-3" id="profileAvatar">A</div>
+                  <h3 id="profileName">Admin</h3>
+                  <p id="profileRole" class="text-muted mb-2">Administrator</p>
+                  <span class="badge bg-success-subtle text-success-emphasis">Active</span>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                    <h3>Personal Information</h3>
+                    <div class="row g-3 mt-2">
+                      <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="profileFullName" />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="profileEmail" />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" id="profileUsername" />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Faculty</label>
+                        <input type="text" class="form-control" id="profileFaculty" />
+                      </div>
+                    </div>
+                    <div class="mt-4 d-flex justify-content-end">
+                      <button type="button" class="btn btn-primary" id="saveProfileBtn">
+                        <i class="bi bi-save me-2"></i>Save Profile
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div id="systemPopupHost" aria-live="polite" aria-atomic="true"></div>
+    <div id="systemModalHost"></div>
+
+    <div class="modal fade" id="documentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="documentModalTitle">Upload Document</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="documentForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Document ID</label>
+                  <input type="text" class="form-control" id="documentId" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Document Title</label>
+                  <input type="text" class="form-control" id="documentTitle" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Document Category</label>
+                  <select class="form-select" id="documentCategory">
+                    <option>LED</option>
+                    <option>LKPS</option>
+                    <option>SPMI</option>
+                    <option>Audit</option>
+                    <option>Evidence</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="documentStatus">
+                    <option>Draft</option>
+                    <option>Submitted</option>
+                    <option>Under Review</option>
+                    <option>Validated</option>
+                    <option>Rejected</option>
+                    <option>Archived</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Study Program</label>
+                  <input type="text" class="form-control" id="documentStudyProgram" value="Teknik Informatika" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Faculty</label>
+                  <input type="text" class="form-control" id="documentFaculty" value="Teknik" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Academic Year</label>
+                  <input type="text" class="form-control" id="documentAcademicYear" value="2025/2026" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Owner</label>
+                  <input type="text" class="form-control" id="documentOwner" value="Sari Maulida" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Version</label>
+                  <input type="text" class="form-control" id="documentVersion" value="V1" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Reviewer</label>
+                  <input type="text" class="form-control" id="documentReviewer" value="Nina Pratiwi" />
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Document File</label>
+                  <input type="file" class="form-control" id="documentFile" />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="saveDocumentBtn">Save Document</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="ledSubmissionModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ledSubmissionModalTitle">Create LED/LKPS Submission</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="ledSubmissionForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Submission ID</label>
+                  <input type="text" class="form-control" id="ledSubmissionId" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Study Program</label>
+                  <input type="text" class="form-control" id="ledStudyProgram" value="Teknik Informatika" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Academic Year</label>
+                  <input type="text" class="form-control" id="ledAcademicYear" value="2025/2026" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Document Type</label>
+                  <select class="form-select" id="ledDocumentType">
+                    <option>LED</option>
+                    <option>LKPS</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="ledStatus">
+                    <option>Draft</option>
+                    <option>Submitted</option>
+                    <option>Review</option>
+                    <option>Revision</option>
+                    <option>Resubmitted</option>
+                    <option>Validated</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Reviewer</label>
+                  <input type="text" class="form-control" id="ledReviewer" value="Nina Pratiwi" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Deadline</label>
+                  <input type="date" class="form-control" id="ledDeadline" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Progress (%)</label>
+                  <input type="number" class="form-control" id="ledProgress" min="0" max="100" value="50" />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="saveLedSubmissionBtn">Save Submission</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="kpiModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="kpiModalTitle">Add KPI</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="kpiForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">KPI Code</label>
+                  <input type="text" class="form-control" id="kpiCode" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">KPI Name</label>
+                  <input type="text" class="form-control" id="kpiName" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Category</label>
+                  <select class="form-select" id="kpiCategory">
+                    <option>Academic</option>
+                    <option>Student</option>
+                    <option>HR</option>
+                    <option>Facilities</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Unit</label>
+                  <input type="text" class="form-control" id="kpiUnit" value="%" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Target</label>
+                  <input type="number" class="form-control" id="kpiTarget" value="80" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Actual</label>
+                  <input type="number" class="form-control" id="kpiActual" value="75" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Responsible Unit</label>
+                  <input type="text" class="form-control" id="kpiResponsibleUnit" value="Unit Mutu" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Measurement Period</label>
+                  <input type="text" class="form-control" id="kpiPeriod" value="2025/2026" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Evidence</label>
+                  <input type="text" class="form-control" id="kpiEvidence" value="Laporan Survey" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="kpiStatus">
+                    <option>Excellent</option>
+                    <option>Achieved</option>
+                    <option>Partially Achieved</option>
+                    <option>Not Achieved</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="saveKpiBtn">Save KPI</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="auditModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="auditModalTitle">Schedule Audit</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="auditForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Audit ID</label>
+                  <input type="text" class="form-control" id="auditId" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Audit Status</label>
+                  <select class="form-select" id="auditStatus">
+                    <option>Scheduled</option>
+                    <option>In Progress</option>
+                    <option>Follow-Up</option>
+                    <option>Completed</option>
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Audit Title</label>
+                  <input type="text" class="form-control" id="auditTitle" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Faculty</label>
+                  <input type="text" class="form-control" id="auditFaculty" value="Fakultas Teknik" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Study Program</label>
+                  <input type="text" class="form-control" id="auditStudyProgram" value="Teknik Informatika" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Auditor</label>
+                  <input type="text" class="form-control" id="auditAuditor" value="Nina Pratiwi" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Audit Date</label>
+                  <input type="date" class="form-control" id="auditDate" />
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Scope</label>
+                  <textarea class="form-control" id="auditScope" rows="3"></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="saveAuditBtn">Save Audit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="findingModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="findingModalTitle">Add Finding</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="findingForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Finding ID</label>
+                  <input type="text" class="form-control" id="findingId" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Audit ID</label>
+                  <input type="text" class="form-control" id="findingAuditId" value="AUD-2026-01" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Category</label>
+                  <select class="form-select" id="findingCategory">
+                    <option>Documentation</option>
+                    <option>Process</option>
+                    <option>Governance</option>
+                    <option>Facilities</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Severity</label>
+                  <select class="form-select" id="findingSeverity">
+                    <option>Major</option>
+                    <option>Minor</option>
+                    <option>Observation</option>
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Finding Description</label>
+                  <textarea class="form-control" id="findingDescription" rows="3" required></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Responsible Unit</label>
+                  <input type="text" class="form-control" id="findingResponsibleUnit" value="Prodi Teknik Informatika" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Deadline</label>
+                  <input type="date" class="form-control" id="findingDeadline" />
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="findingStatus">
+                    <option>Open</option>
+                    <option>In Progress</option>
+                    <option>Resolved</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="saveFindingBtn">Save Finding</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="followUpModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="followUpModalTitle">New Follow-Up</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="followUpForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Follow-up ID</label>
+                  <input type="text" class="form-control" id="followUpId" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="followUpStatus">
+                    <option>Open</option>
+                    <option>In Progress</option>
+                    <option>Closed</option>
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Finding</label>
+                  <input type="text" class="form-control" id="followUpFinding" required />
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Action</label>
+                  <textarea class="form-control" id="followUpAction" rows="2"></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Responsible</label>
+                  <input type="text" class="form-control" id="followUpResponsible" value="Prodi Teknik Informatika" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Target Date</label>
+                  <input type="date" class="form-control" id="followUpTargetDate" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Progress (%)</label>
+                  <input type="number" class="form-control" id="followUpProgress" min="0" max="100" value="50" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Evidence</label>
+                  <input type="text" class="form-control" id="followUpEvidence" value="Evidence uploaded" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Verification</label>
+                  <input type="text" class="form-control" id="followUpVerification" value="Pending" />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="saveFollowUpBtn">Save Follow-Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="documentDetailModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Document Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="documentDetailBody"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
